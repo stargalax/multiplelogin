@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eaf3fc;
+            color: #2c3e50;
+            text-align: center;
+        }
+        h1 {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 20px;
+            margin: 0;
+            font-size: 2rem;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        th, td {
+            border: 1px solid #3498db;
+            padding: 15px;
+            text-align: center;
+        }
+        th {
+            background-color: #3498db;
+            color: #ffffff;
+        }
+        td {
+            background-color: #f7f9fc;
+        }
+        a {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #3498db;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #2980b9;
+        }
+        span {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Nurse Dashboard</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Patient ID</th>
+                <th>Patient Name</th>
+                <th>Status</th>
+                <th>Download Report</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in data %}
+                <tr>
+                    <td>{{ patient.id }}</td>
+                    <td>{{ patient.name }}</td>
+                    <td>{{ patient.status }}</td>
+                    <td>
+                        {% if patient.can_download_pdf %}
+                            <a href="{{ url_for('download_patient_report', patient_id=patient.id, nurse_id=nurse_id) }}">Download Report</a>
+                        {% else %}
+                            <span>No report available</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
